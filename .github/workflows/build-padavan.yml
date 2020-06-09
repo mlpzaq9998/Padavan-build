@@ -14,8 +14,6 @@ on:
   watch:
     types: [started]
     
-env:
-  DIY_P1_SH: diy-part1.sh
 
 jobs:
   build:
@@ -41,7 +39,7 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: MSG1500-SPI MSG1500-NAND
+        TNAME: MSG1500-SPI
       run: |
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/MSG1500-NAND.config /opt/rt-n56u/trunk/configs/templates/MSG1500-NAND.config
