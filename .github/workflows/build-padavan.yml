@@ -13,6 +13,9 @@ on:
 #    - cron: 0 8 * * 5
   watch:
     types: [started]
+    
+env:
+  DIY_P1_SH: diy-part1.sh
 
 jobs:
   build:
@@ -38,9 +41,10 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: K2P-5.0
+        TNAME: MSG1500-SPI MSG1500-NAND
       run: |
         cd /opt/rt-n56u/trunk
+        $GITHUB_WORKSPACE/$DIY_P1_SH
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
