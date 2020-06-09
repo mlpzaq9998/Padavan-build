@@ -1,7 +1,7 @@
-/* K2P-USB */
+/* MSG1500-NAND */
 
-#define BOARD_PID		"MSG1500-SPI"
-#define BOARD_NAME		"MSG1500-SPI"
+#define BOARD_PID		"MSG1500-NAND"
+#define BOARD_NAME		"MSG1500-NAND"
 #define BOARD_DESC		"RAISECOM MSG1500 Wireless Router"
 #define BOARD_VENDOR_NAME	"RAISECOM"
 #define BOARD_VENDOR_URL	"http://www.raisecom.com.cn/"

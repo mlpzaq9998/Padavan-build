@@ -1,4 +1,4 @@
-/* K2P-USB */
+/* MSG1500-SPI */
 
 #define BOARD_PID		"MSG1500-SPI"
 #define BOARD_NAME		"MSG1500-SPI"
