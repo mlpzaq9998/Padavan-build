@@ -44,7 +44,7 @@ jobs:
         TNAME: MSG1500-SPI MSG1500-NAND
       run: |
         cd /opt/rt-n56u/trunk
-        $GITHUB_WORKSPACE/$DIY_P1_SH
+        sudo $GITHUB_WORKSPACE/$DIY_P1_SH
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
