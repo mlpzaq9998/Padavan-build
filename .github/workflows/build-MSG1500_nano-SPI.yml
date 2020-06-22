@@ -45,20 +45,20 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH /opt/rt-n56u
         cd /opt/rt-n56u/toolchain-mipsel
-        sudo sh dl_toolchain.sh
-        sudo mkdir -p /opt/images/
+        sudo -e sh dl_toolchain.sh
+        sudo -e mkdir -p /opt/images/
     - name: Build Firmware
       run: |
         cd /opt/rt-n56u/trunk
-        sudo cp -f $GITHUB_WORKSPACE/MSG1500-SPI.config /opt/rt-n56u/trunk/configs/templates/MSG1500-SPI.config
-        sudo cp -r -f $GITHUB_WORKSPACE/MSG1500-SPI /opt/rt-n56u/trunk/configs/boards/MSG1500-SPI
+        sudo -e cp -f $GITHUB_WORKSPACE/MSG1500-SPI.config /opt/rt-n56u/trunk/configs/templates/MSG1500-SPI.config
+        sudo -e cp -r -f $GITHUB_WORKSPACE/MSG1500-SPI /opt/rt-n56u/trunk/configs/boards/MSG1500-SPI
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
         fi
-        sudo cp -f configs/templates/$TNAME.config .config
-        sudo chmod +x $GITHUB_WORKSPACE/$DIY_SH
-        sudo $GITHUB_WORKSPACE/$DIY_SH
+        sudo -e cp -f configs/templates/$TNAME.config .config
+        sudo -e chmod +x $GITHUB_WORKSPACE/$DIY_SH
+        sudo -e $GITHUB_WORKSPACE/$DIY_SH
         sudo ./clear_tree_simple
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
