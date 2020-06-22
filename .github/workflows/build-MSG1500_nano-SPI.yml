@@ -52,15 +52,15 @@ jobs:
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/MSG1500-SPI.config /opt/rt-n56u/trunk/configs/templates/MSG1500-SPI.config
         cp -r -f $GITHUB_WORKSPACE/MSG1500-SPI /opt/rt-n56u/trunk/configs/boards/MSG1500-SPI
-        if [ ! -f configs/templates/$TNAME.config ] ; then
-        echo "configs/templates/$TNAME.config not found "
+        if [ ! -f configs/templates/${{ env.TNAME }}.config ] ; then
+        echo "configs/templates/${{ env.TNAME }}.config not found "
         exit 1
         fi
-        cp -f configs/templates/$TNAME.config .config
+        cp -f configs/templates/${{ env.TNAME }}.config .config
         chmod +x $GITHUB_WORKSPACE/$DIY_SH
         $GITHUB_WORKSPACE/$DIY_SH
-        sudo ./clear_tree
-        sudo ./build_firmware_modify $TNAME 0
+        sudo ./clear_tree_simple
+        sudo ./build_firmware_modify ${{ env.TNAME }} 0
         sudo mv -f images/*.trx /opt/images/
 
     - name: Check space usage
