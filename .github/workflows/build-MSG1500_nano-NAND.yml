@@ -46,7 +46,7 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH /opt/rt-n56u
         curl -O -L $DL_URL && /
-        mkdir -p toolchain-3.4.x && /
+        mkdir -p /toolchain-3.4.x
         tar -xvf /mipsel-linux-uclibc.tar.xz -C /toolchain-3.4.x
         mkdir -p /opt/images/
     - name: Build Firmware
