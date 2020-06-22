@@ -16,7 +16,7 @@ on:
     
 env:
   REPO_URL: https://github.com/chongshengB/rt-n56u.git
-  DL_URL="https://github.com/hanwckf/padavan-toolchain/releases/download/v1.1/mipsel-linux-uclibc.tar.xz
+  DL_URL: https://github.com/hanwckf/padavan-toolchain/releases/download/v1.1/mipsel-linux-uclibc.tar.xz
   REPO_BRANCH: master
   DIY_SH: NANO.sh
   UPLOAD_BIN_DIR: false
