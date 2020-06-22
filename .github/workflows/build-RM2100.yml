@@ -49,6 +49,7 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       run: |
+        cd /opt/rt-n56u
         cwd=`pwd`
         CONFIG_TOOLCHAIN_DIR=${cwd//\//\\\/}\\/toolchain-mipsel
         cd /opt/rt-n56u/trunk
