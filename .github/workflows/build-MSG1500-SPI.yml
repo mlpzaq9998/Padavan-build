@@ -14,15 +14,6 @@ on:
   watch:
     types: [started]
     
-env:
-  REPO_URL: https://github.com/chongshengB/rt-n56u.git
-  REPO_BRANCH: master
-  DIY_SH: LITE.sh
-  UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: true
-  UPLOAD_WETRANSFER: true
-  TNAME: MSG1500-SPI
 
 jobs:
   build:
@@ -32,7 +23,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -43,11 +33,13 @@ jobs:
         pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget
     - name: Clone source code
       run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH /opt/rt-n56u
+        git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
     - name: Build Firmware
+      env:
+        TNAME: MSG1500-SPI
       run: |
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/MSG1500-SPI.config /opt/rt-n56u/trunk/configs/templates/MSG1500-SPI.config
@@ -57,47 +49,57 @@ jobs:
         exit 1
         fi
         cp -f configs/templates/$TNAME.config .config
-        chmod +x $GITHUB_WORKSPACE/$DIY_SH
-        bash $GITHUB_WORKSPACE/$DIY_SH
+        #####################################################################################
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_MENTOHUST/d' .config #删除配置项MENTOHUST
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER/d' .config #删除配置项SOFTETHERVPN
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT/d' .config #删除配置项SOFTETHERVPN
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD/d' .config #删除配置项SOFTETHERVPN
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT/d' .config #删除配置项SCUTCLIENT
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS/d' .config #删除配置项SS plus+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SSSERVER/d' .config #删除配置项SS server
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER/d' .config #删除配置项DNSFORWARDER
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_ADBYBY/d' .config #删除配置项adbyby plus+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_FRPC/d' .config #删除配置项adbyby plus+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_FRPS/d' .config #删除配置项adbyby plus+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_TUNSAFE/d' .config #删除配置项adbyby plus+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_ALIDDNS/d' .config #删除配置项阿里DDNS
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SMARTDNS/d' .config
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SRELAY/d' .config
+        ######################################################################
+        ##科学上网##
+        echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config #科学上网插件，选择n后全部有关插件都不集成
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config #集成v2ray执行文件，如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config #集成trojan执行文件，如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_KUMASOCKS=y" >> .config #socks5服务端
+        ##科学上网##
+        ##广告管理##
+        echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=y" >> .config #adbyby plus+
+        echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=y" >> .config #KP广告过滤
+        ##广告管理##
+        ##DNS服务##
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config #adg DNS去AD
+        ##DNS服务##
+        ##文件管理##
+        echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #在线文件管理服务
+        echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #集成caddu执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
+        ##文件管理##
+        ##音乐解锁##
+        echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config #网易云解锁
+        echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config #网易云解锁GO版本执行文件（2M多）注意固件超大小
+        ##音乐解锁##
+        ##内网穿透服务##
+        echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
+        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #aliddns
+        ##内网穿透服务##
+        ####################################################################################
+        sed -i "s/^CONFIG_TOOLCHAIN_DIR=.*$/CONFIG_TOOLCHAIN_DIR=${CONFIG_TOOLCHAIN_DIR}/g" .config
         sudo ./clear_tree_simple
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
-
-    - name: Check space usage
-      if: (!cancelled())
-      run: df -hT
-
-    - name: Upload bin directory
+    - name : Upload packages
       uses: actions/upload-artifact@master
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      if: always()
       with:
-        name: Padavan_bin${{ env.TNAME }}
+        name: Padavan-packages
         path: /opt/images
-
-    - name: Organize files
-      id: organize
-      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      run: |
-        cd /opt/images/*
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$PWD"
-        echo "::set-output name=status::success"
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@master
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: Padavan_firmware${{ env.TNAME }}
-        path: ${{ env.FIRMWARE }}
-
-    - name: Upload firmware to cowtransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-    - name: Upload firmware to WeTransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
