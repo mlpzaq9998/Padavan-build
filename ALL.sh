@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd /opt/rt-n56u/trunk
 #####################################################################################
 sed -i '/CONFIG_FIRMWARE_INCLUDE_MENTOHUST/d' .config #删除配置项MENTOHUST
 sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER/d' .config #删除配置项SOFTETHERVPN
