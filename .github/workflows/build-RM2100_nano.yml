@@ -57,7 +57,7 @@ jobs:
         cp -f configs/templates/$TNAME.config .config
         chmod +x $GITHUB_WORKSPACE/$DIY_SH
         $GITHUB_WORKSPACE/$DIY_SH
-        sudo ./clear_tree_simple
+        sudo ./clear_tree
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
 
