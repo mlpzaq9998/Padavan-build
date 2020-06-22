@@ -49,6 +49,8 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       run: |
+        cwd=`pwd`
+        CONFIG_TOOLCHAIN_DIR=${cwd//\//\\\/}\\/toolchain-mipsel
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/MSG1500-NAND.config /opt/rt-n56u/trunk/configs/templates/MSG1500-NAND.config
         cp -r -f $GITHUB_WORKSPACE/MSG1500-NAND /opt/rt-n56u/trunk/configs/boards/MSG1500-NAND
