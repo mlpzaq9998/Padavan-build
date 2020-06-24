@@ -78,8 +78,7 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd /opt/images/*
-        rm -rf packages
+        cd /opt/images/
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
     - name: Upload firmware directory
