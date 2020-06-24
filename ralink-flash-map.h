@@ -1,8 +1,8 @@
 #ifndef __RALINK_FLASH_MAP_H__
 #define __RALINK_FLASH_MAP_H__
 
-#define MTD_Pation-table_PART_SIZE		0x00010000	/* 64K */
-#define MTD_Product-info_PART_SIZE		0x00010000	/* 64K */
+#define MTD_Pation_PART_SIZE		0x00010000	/* 64K */
+#define MTD_Product_PART_SIZE		0x00010000	/* 64K */
 #define MTD_Config_PART_SIZE		0x00030000	/* 64K */
 #define MTD_BOOT_PART_SIZE		0x00020000	/* 128K */
 #define MTD_CONFIG_PART_SIZE		0x00010000	/*  64K */
@@ -25,7 +25,7 @@
 #define IMAGE1_SIZE			CONFIG_RT2880_MTD_PHYSMAP_LEN
 #endif
 
-#define MTD_KERNEL_PART_OFFSET		(MTD_BOOT_PART_SIZE + MTD_CONFIG_PART_SIZE + MTD_Product-info_PART_SIZE)
+#define MTD_KERNEL_PART_OFFSET		(MTD_BOOT_PART_SIZE + MTD_CONFIG_PART_SIZE + MTD_Product_PART_SIZE)
 
 #if defined (CONFIG_RT2880_ROOTFS_IN_FLASH)
 #define MTD_STORE_PART_IDX		5
@@ -47,7 +47,7 @@ static struct mtd_partition rt2880_partitions[] = {
 		offset: MTDPART_OFS_APPEND,
 	}, {
 		name:   "Product-info",		/* mtdblock2 */
-		size:   MTD_Product-info_PART_SIZE,	/* 64K */
+		size:   MTD_Product_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
 	}, {
 		name:   "Kernel",		/* mtdblock3 */
