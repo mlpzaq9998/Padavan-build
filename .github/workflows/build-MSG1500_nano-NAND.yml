@@ -56,7 +56,7 @@ jobs:
         echo "configs/templates/$TNAME.config not found "
         exit 1
         fi
-        cp -f configs/templates/$$TNAME.config .config
+        cp -f configs/templates/$TNAME.config .config
         chmod +x $GITHUB_WORKSPACE/$DIY_SH
         bash $GITHUB_WORKSPACE/$DIY_SH
         sudo ./clear_tree_simple
