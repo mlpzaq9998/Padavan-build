@@ -50,17 +50,19 @@ jobs:
     - name: Build Firmware
       run: |
         cd /opt/rt-n56u/trunk
+        for m in $TNAME;
+        do
         cp -f $GITHUB_WORKSPACE/MSG1500-NAND.config /opt/rt-n56u/trunk/configs/templates/MSG1500-NAND.config
         cp -r -f $GITHUB_WORKSPACE/MSG1500-NAND /opt/rt-n56u/trunk/configs/boards/MSG1500-NAND
-        if [ ! -f configs/templates/$TNAME.config ] ; then
-        echo "configs/templates/$TNAME.config not found "
+        if [ ! -f configs/templates/$m.config ] ; then
+        echo "configs/templates/$m.config not found "
         exit 1
         fi
-        cp -f configs/templates/$TNAME.config .config
+        cp -f configs/templates/$m.config .config
         chmod +x $GITHUB_WORKSPACE/$DIY_SH
         bash $GITHUB_WORKSPACE/$DIY_SH
         sudo ./clear_tree_simple
-        sudo ./build_firmware_modify $TNAME 0
+        sudo ./build_firmware_modify $m 0
         sudo mv -f images/*.trx /opt/images/
 
     - name: Check space usage
