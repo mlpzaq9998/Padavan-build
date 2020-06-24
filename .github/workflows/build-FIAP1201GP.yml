@@ -52,6 +52,7 @@ jobs:
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/FIAP1201GP.config /opt/rt-n56u/trunk/configs/templates/FIAP1201GP.config
         cp -r -f $GITHUB_WORKSPACE/FIAP1201GP /opt/rt-n56u/trunk/configs/boards/FIAP1201GP
+        cp -f $GITHUB_WORKSPACE/ralink-flash-map.h /opt/rt-n56u/tree/master/trunk/linux-3.4.x/drivers/mtd/ralink/ralink-flash-map.h
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
