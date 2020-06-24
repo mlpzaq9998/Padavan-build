@@ -85,7 +85,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: Padavan_firmware${{ env.TNAME }}
+        name: Padavan_firmware_${{ env.TNAME }}
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to cowtransfer

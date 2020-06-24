@@ -78,15 +78,14 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd /opt/images/*
-        rm -rf packages
+        cd /opt/images/
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: Padavan_firmware${{ env.TNAME }}
+        name: Padavan_firmware_${{ env.TNAME }}
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware to cowtransfer
