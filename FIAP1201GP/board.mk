@@ -4,6 +4,6 @@
 # FIAP1201GP# FAST FIAP1201GP  # MT7620  #
 ##################################################################
 
-CFLAGS += -DBOARD_FIAP1201GP
+CFLAGS += -DBOARD_FIAP1201GP -DVENDOR_FAST
 BOARD_NUM_USB_PORTS=0
 
