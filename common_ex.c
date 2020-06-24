@@ -135,7 +135,7 @@ get_eeprom_params(void)
 #if defined (VENDOR_ASUS)
 	int i;
 #endif
-#if defined (VENDOR_TPLINK)
+#if defined (VENDOR_FAST)
 	unsigned char buffer_compare[32];
 #endif
 	int i_offset, i_ret;
