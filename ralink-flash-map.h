@@ -25,7 +25,7 @@
 #define IMAGE1_SIZE			CONFIG_RT2880_MTD_PHYSMAP_LEN
 #endif
 
-#define MTD_KERNEL_PART_OFFSET		(MTD_BOOT_PART_SIZE + MTD_CONFIG_PART_SIZE + MTD_Product_PART_SIZE)
+#define MTD_KERNEL_PART_OFFSET		(MTD_BOOT_PART_SIZE + MTD_Product_PART_SIZE + MTD_CONFIG_PART_SIZE)
 
 #if defined (CONFIG_RT2880_ROOTFS_IN_FLASH)
 #define MTD_STORE_PART_IDX		5
@@ -43,11 +43,11 @@ static struct mtd_partition rt2880_partitions[] = {
 		offset: 0,
 	}, {
 		name:   "Pation-table",		/* mtdblock1 */
-		size:   MTD_CONFIG_PART_SIZE,	/* 64K */
+		size:   MTD_Pation_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
 	}, {
 		name:   "Product-info",		/* mtdblock2 */
-		size:   MTD_Product_PART_SIZE,	/* 64K */
+		size:   MTD_CONFIG_PART_SIZE,	/* 64K */
 		offset: MTDPART_OFS_APPEND,
 	}, {
 		name:   "Kernel",		/* mtdblock3 */
