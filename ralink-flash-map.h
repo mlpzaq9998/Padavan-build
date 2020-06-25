@@ -70,11 +70,11 @@ static struct mtd_partition rt2880_partitions[] = {
 	}, {
 		name:   "Config",	/* mtdblock7 */
 		size:   MTD_Config_PART_SIZE,			/* 192K */
-		offset: 0x007C0000,
+		offset: MTDPART_OFS_APPEND,
 	}, {
 		name:   "ART",	/* mtdblock8 */
 		size:   MTD_FACTORY_PART_SIZE,			/* 64K */
-		offset: 0x007F0000,
+		offset: MTDPART_OFS_APPEND,
 	}
 };
 
