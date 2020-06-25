@@ -55,6 +55,8 @@ jobs:
         cp -f $GITHUB_WORKSPACE/ralink-flash-map.h /opt/rt-n56u/trunk/linux-3.4.x/drivers/mtd/ralink/ralink-flash-map.h
         cp -f $GITHUB_WORKSPACE/common_ex.c /opt/rt-n56u/trunk/user/rc/common_ex.c
         cp -f $GITHUB_WORKSPACE/rtk_api.c /opt/rt-n56u/trunk/linux-3.4.x/drivers/net/rtl8367/api_8367b/rtk_api.c
+        cp -f $GITHUB_WORKSPACE/Kconfig /opt/rt-n56u/trunk/linux-3.4.x/drivers/net/rtl8367/Kconfig
+        cp -f $GITHUB_WORKSPACE/rtl8367_def.h /opt/rt-n56u/trunk/linux-3.4.x/drivers/net/rtl8367/rtl8367_def.h
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
