@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /opt/rt-n56u/trunk
+cd /opt/rt-n56u/trunk/configs/templates
 #####################################################################################
 sed -i '/CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT/d' .config
 sed -i '/CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM/d' .config
