@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Build MSG1500_nano-NAND
+name: Build chongsheng BRM2100_nano
 
 on: 
   release:
@@ -22,7 +22,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
-  TNAME: MSG1500-NAND
+  TNAME: RM2100
 
 jobs:
   build:
@@ -50,15 +50,13 @@ jobs:
     - name: Build Firmware
       run: |
         cd /opt/rt-n56u/trunk
-        cp -f $GITHUB_WORKSPACE/MSG1500-NAND.config /opt/rt-n56u/trunk/configs/templates/MSG1500-NAND.config
-        cp -r -f $GITHUB_WORKSPACE/MSG1500-NAND /opt/rt-n56u/trunk/configs/boards/MSG1500-NAND
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
         fi
         cp -f configs/templates/$TNAME.config .config
-        chmod +x $GITHUB_WORKSPACE/$DIY_SH
-        bash $GITHUB_WORKSPACE/$DIY_SH
+        chmod +x $GITHUB_WORKSPACE/chongshengB/$DIY_SH
+        bash $GITHUB_WORKSPACE/chongshengB/$DIY_SH
         sudo ./clear_tree_simple
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/

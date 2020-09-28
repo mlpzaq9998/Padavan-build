@@ -1,5 +1,5 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
-name: Build RM2100_nano
+name: Build chongsheng MSG1500-SPI
 
 on: 
   release:
@@ -17,12 +17,12 @@ on:
 env:
   REPO_URL: https://github.com/chongshengB/rt-n56u.git
   REPO_BRANCH: master
-  DIY_SH: NANO.sh
+  DIY_SH: LITE.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
-  TNAME: RM2100
+  TNAME: MSG1500-SPI
 
 jobs:
   build:
@@ -50,13 +50,15 @@ jobs:
     - name: Build Firmware
       run: |
         cd /opt/rt-n56u/trunk
+        cp -f $GITHUB_WORKSPACE/chongshengB/MSG1500-SPI.config /opt/rt-n56u/trunk/configs/templates/MSG1500-SPI.config
+        cp -r -f $GITHUB_WORKSPACE/chongshengB/MSG1500-SPI /opt/rt-n56u/trunk/configs/boards/MSG1500-SPI
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
         fi
         cp -f configs/templates/$TNAME.config .config
-        chmod +x $GITHUB_WORKSPACE/$DIY_SH
-        bash $GITHUB_WORKSPACE/$DIY_SH
+        chmod +x $GITHUB_WORKSPACE/chongshengB/$DIY_SH
+        bash $GITHUB_WORKSPACE/chongshengB/$DIY_SH
         sudo ./clear_tree_simple
         sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images/
