@@ -49,7 +49,6 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       run: |
-        mv $GITHUB_WORKSPACE/busybox.config /opt/rt-n56u/trunk/user/busybox/busybox-1.24.x/.config
         cd /opt/rt-n56u/trunk
         cp -f $GITHUB_WORKSPACE/chongshengB/MSG1500-NAND.config /opt/rt-n56u/trunk/configs/templates/MSG1500-NAND.config
         cp -r -f $GITHUB_WORKSPACE/chongshengB/MSG1500-NAND /opt/rt-n56u/trunk/configs/boards/MSG1500-NAND
@@ -80,7 +79,7 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd /opt/images/
-        echo "::set-env name=FIRMWARE::$PWD"
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
